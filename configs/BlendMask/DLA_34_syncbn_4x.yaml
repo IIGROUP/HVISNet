@@ -1,0 +1,29 @@
+_BASE_: "Base-RT.yaml"
+MODEL:
+  BACKBONE:
+    NAME: "build_fcos_dla_fpn_backbone"
+    FREEZE_AT: -1
+  WEIGHTS: "/home/yr/code/PVIS/ours/AdelaiDet/training_dir/video_image_bbox/model_final.pth"
+  DLA:
+    CONV_BODY: "DLA34"
+    NORM: "SyncBN"
+    # NORM: "BN"
+
+  FPN:
+    IN_FEATURES: ["level3", "level4", "level5"]
+  BASIS_MODULE:  
+    NUM_CLASSES: 1
+  FCOS:
+    NUM_CLASSES: 1
+    BG_ID : 0
+DATASETS:
+  TRAIN: ("train",)
+  # TRAIN: ("train_image",)
+  TEST: ("val",)      
+SOLVER:
+  IMS_PER_BATCH: 1
+  BASE_LR: 0.005  # Note that RetinaNet uses a different default learning rate 0.0005  0.01
+  STEPS: (140000, 160000)
+  MAX_ITER: 180000  
+OUTPUT_DIR: "output/blendmask/DLA_34_syncbn_4x"
+# OUTPUT_DIR: "output/blendmask/DLA_34"

@@ -1,0 +1,21 @@
+_BASE_: "Base-BlendMask.yaml"
+MODEL:
+  WEIGHTS: "/home/yr/code/PVIS/ours/AdelaiDet/model/R-50.pkl"
+  RESNETS:
+    DEPTH: 50
+  # FPN:
+  #   IN_FEATURES: ["level3", "level4", "level5"]
+  # BASIS_MODULE:  
+  #   NUM_CLASSES: 1
+  FCOS:
+    NUM_CLASSES: 1
+DATASETS:
+  TRAIN: ("train",)
+  # TRAIN: ("train_image",)
+  TEST: ("val",)      
+SOLVER:
+  IMS_PER_BATCH: 1
+  BASE_LR: 0.005  # Note that RetinaNet uses a different default learning rate 0.0005  0.01
+  STEPS: (140000, 160000)
+  MAX_ITER: 180000  
+OUTPUT_DIR: "output/blendmask/R_50_1x"
